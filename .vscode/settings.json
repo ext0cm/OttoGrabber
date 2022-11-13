@@ -1,0 +1,20 @@
+{
+    "search.exclude": {
+        "**/.git": true,
+        "**/.next": true,
+        "**/node_modules": true,
+        "**/bower_components": true,
+        "**/tmp": true
+    },
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+        "source.fixAll": true
+    },
+    "emmet.triggerExpansionOnTab": true,
+    "emmet.includeLanguages": {
+        "javascript": "javascriptreact"
+    },
+    "css.customData": [".vscode/css_custom_data.json"],
+    "WillLuke.nextjs.hasPrompted": true
+}
