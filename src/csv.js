@@ -1,34 +1,27 @@
 const fs = require('fs');
+const { config } = require('../config');
 const { defaultEscape } = require('./utils');
 
-exports.DEFAULT_CSV_NAME = 'products.csv';
-
-exports.DEFAULT_IMAGE_PREFIX = `https://i.otto.de/i/otto/`;
-
-exports.createCsvWhenNotExists = (fileName = undefined) => {
-    const fn = fileName || this.DEFAULT_CSV_NAME;
-    if (!fs.existsSync(fn)) {
-        fs.writeFileSync(fn, `GTIN,SKU,NAME,IMAGES,PRICE,BRAND\n`);
+exports.createCsvWhenNotExists = (fileName) => {
+    if (!fs.existsSync(fileName)) {
+        fs.writeFileSync(fn, config.CSV_HEADER);
     } else {
-        const con = fs.readFileSync(fn, { encoding: 'utf-8' });
+        const con = fs.readFileSync(fileName, { encoding: 'utf-8' });
 
         if (!con.startsWith('GTIN')) {
-            fs.writeFileSync(
-                fn,
-                `GTIN,SKU,NAME,IMAGES,PRICE,BRAND,HTML,FEATURES\n${con}`
-            );
+            fs.writeFileSync(fn, `${CSV_HEADER}\n${con}`);
         }
     }
 };
 
-exports.addToCsv = (fileName = undefined, line = '') => {
+exports.addToCsv = (fileName, line = '') => {
     if (!line || !line.length) {
         return;
     }
 
     this.createCsvWhenNotExists();
 
-    fs.appendFileSync(fileName || this.DEFAULT_CSV_NAME, `${line}\n`);
+    fs.appendFileSync(fileName, `${line}\n`);
 };
 
 exports.productToCsv = (product, brand = '', htmlCharacteristics = '') => {
@@ -43,7 +36,7 @@ exports.productToCsv = (product, brand = '', htmlCharacteristics = '') => {
               `"${product.sku || product.articleNumber || ''}"`,
               `"${defaultEscape(product.name || '')}"`,
               `"${images
-                  .map((image) => `${this.DEFAULT_IMAGE_PREFIX}${image}`)
+                  .map((image) => `${config.DEFAULT_IMAGE_PREFIX}${image}`)
                   .join('||')}"`,
               `"${
                   product.offers

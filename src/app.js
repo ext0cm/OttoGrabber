@@ -1,9 +1,5 @@
-const {
-    addToCsv,
-    DEFAULT_CSV_NAME,
-    createCsvWhenNotExists,
-    productToCsv,
-} = require('./csv');
+const { config } = require('../config');
+const { addToCsv, createCsvWhenNotExists, productToCsv } = require('./csv');
 const { parseProduct } = require('./product');
 const { getUrls } = require('./urls');
 
@@ -11,7 +7,7 @@ const { getUrls } = require('./urls');
     createCsvWhenNotExists();
 
     getUrls().forEach(async (url) => {
-        const product = await parseProduct(url);
+        const product = await parseProduct(url).catch(console.error);
 
         const productVars = product.variations;
         const productVarsKeys = productVars ? Object.keys(productVars) : [];
@@ -21,7 +17,7 @@ const { getUrls } = require('./urls');
                 const productVar = productVars[productVarKey];
 
                 addToCsv(
-                    DEFAULT_CSV_NAME,
+                    config.PRODUCTS_CSV_NAME,
                     productToCsv(
                         productVar,
                         product.brand || '',
@@ -33,6 +29,6 @@ const { getUrls } = require('./urls');
             return;
         }
 
-        addToCsv(DEFAULT_CSV_NAME, productToCsv(product));
+        addToCsv(config.PRODUCTS_CSV_NAME, productToCsv(product));
     });
 })();
