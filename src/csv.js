@@ -8,7 +8,7 @@ exports.createCsvWhenNotExists = (fileName) => {
     } else {
         const con = fs.readFileSync(fileName, { encoding: 'utf-8' });
 
-        if (!con.startsWith('GTIN')) {
+        if (!con.startsWith(CSV_HEADER)) {
             fs.writeFileSync(fn, `${CSV_HEADER}\n${con}`);
         }
     }
