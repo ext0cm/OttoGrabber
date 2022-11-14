@@ -1,10 +1,10 @@
 const axios = require('axios');
 
-exports.SCRIPT_DELIMITER = `<script type="application/ld+json">`;
-exports.SCRIPT_DELIMITER_2 = `</`;
+const SCRIPT_DELIMITER = `<script type="application/ld+json">`;
+const SCRIPT_DELIMITER_2 = `</`;
 
-exports.SCRIPT_DELIMITER_EXTRA = `script id="productDataJson" type="application/json">`;
-exports.SCRIPT_DELIMITER_EXTRA_2 = `</`;
+const SCRIPT_DELIMITER_EXTRA = `<script id="productDataJson" type="application/json">`;
+const SCRIPT_DELIMITER_EXTRA_2 = `</`;
 
 exports.parseProduct = async (url) => {
     const ax = await axios
@@ -12,20 +12,20 @@ exports.parseProduct = async (url) => {
         .then((res) => {
             const r = {};
 
-            if (res.data.indexOf(this.SCRIPT_DELIMITER) !== -1) {
+            if (res.data.indexOf(SCRIPT_DELIMITER) !== -1) {
                 r.data =
                     res.data
-                        .split(this.SCRIPT_DELIMITER)[1]
-                        .split(this.SCRIPT_DELIMITER_2)[0] || '';
+                        .split(SCRIPT_DELIMITER)[1]
+                        .split(SCRIPT_DELIMITER_2)[0] || '';
             } else {
                 r.data = '{}';
             }
 
-            if (res.data.indexOf(this.SCRIPT_DELIMITER_EXTRA) !== -1) {
+            if (res.data.indexOf(SCRIPT_DELIMITER_EXTRA) !== -1) {
                 r.extra =
                     res.data
-                        .split(this.SCRIPT_DELIMITER_EXTRA)[1]
-                        .split(this.SCRIPT_DELIMITER_EXTRA_2)[0] || '';
+                        .split(SCRIPT_DELIMITER_EXTRA)[1]
+                        .split(SCRIPT_DELIMITER_EXTRA_2)[0] || '';
             } else {
                 r.extra = '{}';
             }

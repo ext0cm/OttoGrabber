@@ -4,7 +4,7 @@ const { parseProduct } = require('./product');
 const { getUrls } = require('./urls');
 
 (async () => {
-    createCsvWhenNotExists();
+    createCsvWhenNotExists(config.PRODUCTS_CSV_NAME);
 
     getUrls().forEach(async (url) => {
         const product = await parseProduct(url).catch(console.error);

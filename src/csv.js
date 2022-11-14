@@ -3,18 +3,26 @@ const { config } = require('../config');
 const { defaultEscape } = require('./utils');
 
 exports.createCsvWhenNotExists = (fileName) => {
+    if (!fileName) {
+        return;
+    }
+
     if (!fs.existsSync(fileName)) {
-        fs.writeFileSync(fn, config.CSV_HEADER);
+        fs.writeFileSync(fileName, config.CSV_HEADER);
     } else {
         const con = fs.readFileSync(fileName, { encoding: 'utf-8' });
 
-        if (!con.startsWith(CSV_HEADER)) {
-            fs.writeFileSync(fn, `${CSV_HEADER}\n${con}`);
+        if (!con.startsWith(config.CSV_HEADER)) {
+            fs.writeFileSync(fileName, `${config.CSV_HEADER}\n${con}`);
         }
     }
 };
 
 exports.addToCsv = (fileName, line = '') => {
+    if (!fileName) {
+        return;
+    }
+
     if (!line || !line.length) {
         return;
     }
