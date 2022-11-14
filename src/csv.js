@@ -2,7 +2,7 @@ const fs = require('fs');
 const { config } = require('../config');
 const { defaultEscape } = require('./utils');
 
-const CSV_HEADER = `GTIN,SKU,NAME,IMAGES,PRICE,BRAND,HTML,FEATURES\n`;
+const CSV_HEADER = `GTIN,SKU,NAME,IMAGES,PRICE,BRAND,HTML,FEATURES`;
 
 exports.createCsvWhenNotExists = (fileName) => {
     if (!fileName) {

@@ -3,7 +3,7 @@ const { addToCsv, createCsvWhenNotExists, productToCsv } = require('./csv');
 const { parseProduct } = require('./product');
 const { getUrls } = require('./urls');
 
-(async () => {
+module.exports.default = (async () => {
     createCsvWhenNotExists(config.PRODUCTS_CSV_NAME);
 
     getUrls().forEach(async (url) => {
